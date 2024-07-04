@@ -38,7 +38,11 @@ public class Application {
 							} else {
 								throw new IllegalArgumentException("Can not divide by zero, try again.");
 							}
-						//bomboclat im NOT parsing this twice
+						case "^":
+							System.out.println("Result: " + Math.pow(num1, num2));
+							break;
+						case "P":
+							System.out.println("Result: " + permutation((int)num1, (int)num2));
 						default:
 							throw new IllegalArgumentException("argument 2 is not an accepted operator. Please try again.");
 					}
@@ -50,7 +54,23 @@ public class Application {
 					args[0] = args[0].replace("!", ""); //trims the ! from string (eg. in 5!, we only need the 5)
 					int factorialnum = Integer.parseInt(args[0]); //converts the string to double for calculation.
 					System.out.println("Result: " + factorial(factorialnum));
-				} else {
+				} 
+				else if (args[0].indexOf("sqrt(") != -1) {
+					String strnum = args[0].substring(args[0].indexOf('(') + 1, args[0].indexOf(')'));
+					double num = Double.parseDouble(strnum);
+					System.out.println("Result: " + sqrt(num));
+				}
+				else if(args[0].indexOf("ln(") != 0) {
+					String strnum = args[0].substring(args[0].indexOf('(') + 1, args[0].indexOf(')'));
+					double num = Double.parseDouble(strnum);
+					System.out.println("Result: " + ln(num));
+				}
+				else if(args[0].indexOf("log(") != 0) {
+					String strnum = args[0].substring(args[0].indexOf('(') + 1, args[0].indexOf(')'));
+					double num = Double.parseDouble(strnum);
+					System.out.println("Result: " + log(num));
+				}
+				else {
 					throw new IllegalArgumentException("Operator not specified. Did you mean " + args[0] + "! ? Try again.");
 				}
 				
