@@ -1,0 +1,19 @@
+/**
+ * 
+ */
+package ca.ucalgary.ensf380;
+import java.awt.Point;
+/**
+ * 
+ */
+public class Shape {
+	private 
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Point s = new Point();
+	}
+
+}

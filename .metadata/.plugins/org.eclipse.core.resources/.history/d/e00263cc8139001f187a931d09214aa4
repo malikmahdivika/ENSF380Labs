@@ -1,0 +1,192 @@
+/**
+ * 
+ */
+package com.malikmahdivika.calculator;
+import java.util.Scanner;
+/**
+ * 
+ */
+public class Application {
+
+	/**
+	 * @param args optional command-line arguments can be passed to pre-input the calculator
+	 */
+	public static void main(String[] args) {
+		System.out.println("This is a simple Java program which performs basic operations"
+				+ " on the command-line interface.");
+		if (args.length == 3 || args.length == 1) {
+			// Parse CLI args based on assumption it is in the format "number" "operator" "number" 
+			System.out.println("Argument(s) detected.");
+			if (args.length == 3) {
+				try {
+					double num1 = Double.parseDouble(args[0]);
+					double num2 = Double.parseDouble(args[2]);
+					switch (args[1]) {
+						case "+":
+							System.out.println("Result: " + (num1 + num2));
+							break;
+						case "-":
+							System.out.println("Result: " + (num1 - num2));
+							break;
+						case "*":
+							System.out.println("Result: " + (num1 * num2));
+							break;
+						case "/":
+							if (num2 != 0) {
+								System.out.println("Result: " + (num1/num2));
+								break;
+							} else {
+								throw new IllegalArgumentException("Can not divide by zero, try again.");
+							}
+						default:
+							throw new IllegalArgumentException("argument 2 is not an accepted operator. Please try again.");
+					}
+				} catch(NumberFormatException e) {
+					throw new IllegalArgumentException("arguments 1 or 3 are not numbers. Please try again."); //catches non-number arguments 0 and 1.
+				}
+			} else {
+				if (args[0].indexOf('!') != -1) { //checks that the ! operation is specified.
+					args[0] = args[0].replace("!", ""); //trims the ! from string (eg. in 5!, we only need the 5)
+					double factorialnum = Double.parseDouble(args[0]); //converts the string to double for calculation.
+					System.out.println("Result: " + factorial(factorialnum));
+				} else {
+					throw new IllegalArgumentException("Operator not specified. Did you mean " + args[0] + "! ? Try again.");
+				}
+				
+			}
+			
+		} else {
+			//In event of no CLI arguments, ask for user input.
+			Scanner scan = new Scanner(System.in);
+			System.out.println("No CLI arguments detected, or arguments do not match specifications.");
+			System.out.print("Enter operation to perform (i.e. add, subtract, multiply, divide, factorial): ");
+			String operation = scan.next();
+			;
+			System.out.println("Result: " + handle(operation));
+			scan.close();
+		}
+		
+		
+	}
+	
+	public static double handle(String operation) {
+		Scanner scan = new Scanner(System.in);
+
+		
+		switch(operation.toLowerCase()) {
+		case "add":
+			System.out.print("Enter the first operand: ");
+			double num1 = scan.nextDouble();
+			
+			System.out.print("Enter the second operand: ");
+			double num2 = scan.nextDouble();
+			
+			scan.close();
+			return add(num1, num2);
+		case "subtract":
+			System.out.print("Enter the first operand: ");
+			double sub1 = scan.nextDouble();
+			
+			System.out.print("Enter the second operand: ");
+			double sub2 = scan.nextDouble();
+			
+			scan.close();
+			return subtract(sub1, sub2);
+		case "multiply":
+			System.out.print("Enter the first operand: ");
+			double mult1 = scan.nextDouble();
+			
+			System.out.print("Enter the second operand: ");
+			double mult2 = scan.nextDouble();
+			
+			scan.close();
+			return multiply(mult1, mult2);
+		case "divide":
+			System.out.print("Enter the first operand: ");
+			double div1 = scan.nextDouble();
+			
+			System.out.print("Enter the second operand: ");
+			double div2 = scan.nextDouble();
+			
+			if (div2 == 0) {
+				scan.close();
+				throw new IllegalArgumentException("Can not divide by zero, use a different second operation.");
+			} else {
+				scan.close();
+				return divide(div1, div2);
+			}
+		case "factorial":
+			System.out.print("Enter number to calculate its factorial: ");
+			double factorial = scan.nextDouble();
+			
+			scan.close();
+			return factorial(factorial);
+		default:
+			scan.close();
+			throw new IllegalArgumentException("Operator not accepted, try again."); //TODO message
+		}
+		
+		
+	}
+	
+	public static double add(double num1, double num2) {
+		/**
+		 * @param args accepts two double variables.
+		 * 
+		 * Adds two numbers together.
+		 */
+		return num1 + num2;
+	}
+	
+	public static double subtract(double num1, double num2) {
+		/**
+		 * @param args accepts two double variables.
+		 * 
+		 * Subtracts two numbers together.
+		 */
+		return num1 - num2;
+	}
+	
+	public static double multiply(double num1, double num2) {
+		/**
+		 * @param args accepts two double variables.
+		 * 
+		 * Multiplies two numbers together.
+		 */
+		return num1 * num2;
+	}
+	
+	public static double divide(double num1, double num2) {
+		/**
+		 * @param args accepts two double variables.
+		 * 
+		 * Divides two numbers together assuming num2 != 0.
+		 */
+		return num1/num2;
+	}
+	
+	public static long factorial(int n) {
+		/**
+		 * @param args accepts one double variable.
+		 * 
+		 * Recursively calculates the factorial of one number.
+		 */
+		if (n < 0) {
+			System.out.println("Factorial of negative number is undefined.");
+			return 0;
+		} else {
+			return factorialHelper(n, n);
+		}
+	}
+	
+	private static long factorialHelper(int originalNum, int num) {
+		if (num <= 1) {
+			return 1; //base case *1
+		}
+		//Calculate progress and update progress bar
+		int progress = (int)(((originalNum - num) / (double) originalNum) * 100);
+		System.out.print("/rCalculating factorial: " + progress + "%");
+		return num * factorialHelper(originalNum, num - 1);
+	}
+	
+}

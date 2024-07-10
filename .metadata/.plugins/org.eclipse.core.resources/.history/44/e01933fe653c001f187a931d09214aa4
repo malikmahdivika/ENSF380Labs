@@ -1,0 +1,28 @@
+/**
+ * 
+ */
+package ca.ucalgary.ensf380;
+
+/**
+ * 
+ */
+public class Creature {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		Creature test = new Creature();
+		Animal myAnimal = test.new Animal();
+		String myType = myAnimal.animalType();
+		System.out.println("This is a placeholder for Creature " + myType);
+	}
+
+	
+	public class Animal {
+		private String animalType = "dog";
+		public String animalType() {
+			return animalType;
+		}
+	}
+}
